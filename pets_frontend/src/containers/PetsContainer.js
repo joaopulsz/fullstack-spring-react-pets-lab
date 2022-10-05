@@ -26,9 +26,18 @@ const PetsContainer = () => {
         .then(savedPet => setPets([...pets, savedPet]));
     }
 
+    const deletePet = (id) => {
+        fetch(`http://localhost:8080/pets/${id}`, {
+            method: "DELETE",
+            headers: {'Content-Type': 'application/json'}
+        })
+
+        setPets(pets.filter(pet => pet.id !== id));
+    }
+
     return <main>
-            <PetsForm postPet={postPet}/>
-            <PetsList pets={pets} />
+            <PetsForm postPet={postPet} />
+            <PetsList pets={pets} deletePet={deletePet} />
         </main>
 }
 
