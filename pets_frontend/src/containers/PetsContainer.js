@@ -16,8 +16,18 @@ const PetsContainer = () => {
         fetchPets();
     }, [])
 
+    const postPet = (newPet) => {
+        fetch("http://localhost:8080/pets", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(newPet)
+        })
+        .then(response => response.json())
+        .then(savedPet => setPets([...pets, savedPet]));
+    }
+
     return <main>
-            <PetsForm />
+            <PetsForm postPet={postPet}/>
             <PetsList pets={pets} />
         </main>
 }
